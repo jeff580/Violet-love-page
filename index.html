@@ -3,38 +3,338 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Violet ❤️ — Our New Chapter</title>
+<title>For Violet — Our New Chapter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --plum:#3d1633;
+  --wine:#6d2c4c;
+  --rose:#c17b93;
+  --blush:#f6e3ea;
+  --paper:#fbf4ee;
+  --gold:#b8905a;
+  --ink:#3a2436;
+}
+
 *{box-sizing:border-box}
 
+html{scroll-behavior:smooth}
+
 body{
-margin:0;
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-font-family:Georgia,"Times New Roman",serif;
-color:#54243a;
-background:linear-gradient(135deg,#ffe1eb,#fff8fa,#f2e1ff);
-overflow:hidden
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px 18px;
+  font-family:"EB Garamond",Georgia,serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(193,123,147,.25), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(184,144,90,.18), transparent 50%),
+    linear-gradient(160deg,var(--plum) 0%, var(--wine) 45%, #8a3a5c 100%);
+  overflow-x:hidden;
+  position:relative;
 }
+
+.vine{ position:fixed; pointer-events:none; opacity:.35; z-index:0; }
+.vine.tl{ top:-30px; left:-30px; width:220px; transform:rotate(8deg); }
+.vine.br{ bottom:-30px; right:-30px; width:220px; transform:rotate(188deg); }
+
+#envelope-stage{
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  z-index:50;
+  background:linear-gradient(160deg,var(--plum),var(--wine));
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#envelope-stage.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+
+.envelope{ width:min(320px,78vw); aspect-ratio:3/2; position:relative; cursor:pointer; }
+.env-body{ position:absolute; inset:0; background:var(--paper); border-radius:6px; box-shadow:0 25px 60px rgba(0,0,0,.35); }
+.env-flap{
+  position:absolute; top:0; left:0; right:0; height:60%;
+  background:var(--blush);
+  clip-path:polygon(0 0,100% 0,50% 85%);
+  border-radius:6px 6px 0 0;
+  transform-origin:top center;
+  transition:transform .7s cubic-bezier(.6,-0.2,.3,1.4);
+  z-index:2;
+}
+.envelope.open .env-flap{ transform:rotateX(180deg); }
+.seal{
+  position:absolute; top:calc(60% - 26px); left:50%;
+  transform:translate(-50%,-50%);
+  width:52px; height:52px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#d79e60,var(--gold) 60%,#8f6534 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-family:"Cormorant Garamond",serif; font-style:italic; color:#3a2410; font-size:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,.35), inset 0 2px 3px rgba(255,255,255,.35);
+  z-index:3;
+  transition:transform .4s ease, opacity .4s ease;
+}
+.envelope.open .seal{ transform:translate(-50%,-50%) scale(0); opacity:0; }
+.env-hint{
+  position:absolute; bottom:-38px; left:0; right:0; text-align:center;
+  color:var(--blush); font-family:"Jost",sans-serif; font-size:12px;
+  letter-spacing:3px; text-transform:uppercase; opacity:.8;
+  animation:hintPulse 2s ease-in-out infinite;
+}
+@keyframes hintPulse{ 50%{opacity:.35} }
+
+.stage{ position:relative; z-index:1; opacity:0; transform:translateY(24px); transition:opacity .9s ease .1s, transform .9s ease .1s; }
+.stage.show{ opacity:1; transform:translateY(0); }
 
 .card{
-width:min(700px,100%);
-max-height:94vh;
-overflow:auto;
-background:rgba(255,255,255,.94);
-border-radius:30px;
-padding:38px 28px;
-text-align:center;
-box-shadow:0 20px 70px rgba(113,48,75,.22);
-border:1px solid white
+  width:min(640px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--paper),var(--paper)),
+    repeating-linear-gradient(transparent 0 38px, rgba(109,44,76,.05) 38px 39px);
+  border-radius:4px;
+  padding:52px 44px 42px;
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.4);
+  position:relative;
+  border-top:4px solid var(--gold);
+}
+.card::before,.card::after{ content:""; position:absolute; width:64px; height:64px; border:1px solid var(--rose); opacity:.5; }
+.card::before{ top:14px; left:14px; border-width:1px 0 0 1px; }
+.card::after{ bottom:14px; right:14px; border-width:0 1px 1px 0; }
+
+.eyebrow{ font-family:"Jost",sans-serif; font-size:11px; letter-spacing:5px; text-transform:uppercase; color:var(--rose); margin-bottom:10px; }
+
+h1{
+  font-family:"Cormorant Garamond",serif; font-weight:600; font-style:italic;
+  font-size:clamp(42px,9vw,64px); margin:4px 0 6px; color:var(--wine); letter-spacing:1px;
 }
 
-.heart{
-font-size:52px;
+.subtitle{ font-family:"Jost",sans-serif; font-size:13px; letter-spacing:2px; color:#9a6f80; margin-bottom:30px; text-transform:uppercase; }
+
+.divider{ width:70px; height:1px; background:var(--gold); margin:0 auto 30px; position:relative; }
+.divider::before{
+  content:"❦"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  background:var(--paper); padding:0 10px; color:var(--gold); font-size:16px;
+}
+
+.message{ font-size:19px; line-height:1.85; max-width:520px; margin:0 auto; color:var(--ink); }
+.message .drop{ font-family:"Cormorant Garamond",serif; font-size:52px; font-style:italic; float:left; line-height:.7; padding:8px 8px 0 0; color:var(--wine); }
+
+.agreement{
+  margin:34px 0; padding:26px 24px;
+  background:linear-gradient(180deg,var(--blush),#fbeef2);
+  border:1px solid #e7c3d0; border-radius:8px; position:relative; text-align:left;
+}
+.agreement h2{ margin:0 0 14px; font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; font-size:26px; color:var(--wine); text-align:center; }
+.agreement p{ font-size:17.5px; line-height:1.7; margin:0 0 12px; }
+.agreement p:last-child{ margin-bottom:0; }
+.highlight{ font-weight:600; color:var(--wine); border-bottom:1px dashed var(--rose); }
+
+.writebox{ text-align:left; margin-top:30px; }
+
+label{ display:block; font-family:"Jost",sans-serif; font-weight:500; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:#8d4963; margin-bottom:9px; }
+
+input, textarea{
+  width:100%; border:0; border-bottom:2px solid #e2bccb; border-radius:0;
+  padding:12px 4px; font:19px "Cormorant Garamond",serif; color:var(--ink);
+  outline:none; background:transparent; transition:border-color .25s ease;
+}
+input{ margin-bottom:20px; }
+textarea{ min-height:110px; resize:vertical; }
+input:focus, textarea:focus{ border-color:var(--wine); }
+input::placeholder, textarea::placeholder{ color:#c39aa9; font-style:italic; }
+
+.submit-row{ text-align:center; margin-top:28px; }
+
+button{
+  border:1px solid var(--wine); border-radius:999px; padding:14px 36px;
+  background:transparent; color:var(--wine);
+  font-family:"Jost",sans-serif; font-size:13px; letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; transition:background .25s ease, color .25s ease, transform .15s ease;
+}
+button:hover{ background:var(--wine); color:var(--paper); transform:translateY(-2px); }
+
+.status{ font-family:"Jost",sans-serif; font-size:12px; letter-spacing:.5px; color:#a97e8f; text-align:center; margin-top:14px; }
+
+.footer{ margin-top:34px; padding-top:22px; border-top:1px solid #e7c3d0; color:#a97e8f; font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; }
+
+.floating{
+  position:fixed; bottom:-40px; font-size:16px; opacity:.5;
+  animation:floatUp linear infinite; pointer-events:none; z-index:0; color:var(--blush);
+}
+@keyframes floatUp{
+  0%{ transform:translateY(0) rotate(0deg); opacity:0; }
+  15%{ opacity:.6; }
+  100%{ transform:translateY(-110vh) rotate(300deg); opacity:0; }
+}
+
+.overlay{
+  display:none; position:fixed; inset:0; background:rgba(61,22,51,.7);
+  align-items:center; justify-content:center; padding:22px; z-index:20; backdrop-filter:blur(2px);
+}
+.popup{
+  width:min(500px,100%); background:var(--paper); border-radius:6px; padding:44px 30px;
+  text-align:center; box-shadow:0 25px 90px rgba(0,0,0,.4); animation:pop .45s ease;
+  border-top:4px solid var(--gold);
+}
+@keyframes pop{ from{ transform:scale(.9); opacity:0; } to{ transform:scale(1); opacity:1; } }
+.popup .seal-big{
+  width:64px; height:64px; border-radius:50%; margin:0 auto 18px;
+  background:radial-gradient(circle at 35% 30%,#d79e60,var(--gold) 60%,#8f6534 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-family:"Cormorant Garamond",serif; font-style:italic; color:#3a2410; font-size:20px;
+  box-shadow:0 6px 14px rgba(0,0,0,.3), inset 0 2px 3px rgba(255,255,255,.35);
+}
+.popup h2{ font-family:"Cormorant Garamond",serif; font-weight:600; font-style:italic; font-size:clamp(28px,7vw,38px); color:var(--wine); margin:0 0 14px; }
+.popup p{ font-size:18px; line-height:1.7; color:var(--ink); }
+.popup .close{ margin-top:26px; }
+
+@media (prefers-reduced-motion: reduce){
+  .floating, .env-hint{ animation:none; }
+  .stage, .envelope .env-flap, .seal, .popup{ transition:none; animation:none; }
+}
+</style>
+</head>
+
+<body>
+
+<svg class="vine tl" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5 5 C 60 10, 40 70, 90 60 C 130 52, 120 100, 170 90" stroke="#f6e3ea" stroke-width="1.5"/>
+  <circle cx="90" cy="60" r="4" fill="#f6e3ea"/>
+  <circle cx="170" cy="90" r="3" fill="#f6e3ea"/>
+  <circle cx="40" cy="70" r="3" fill="#f6e3ea"/>
+</svg>
+<svg class="vine br" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5 5 C 60 10, 40 70, 90 60 C 130 52, 120 100, 170 90" stroke="#f6e3ea" stroke-width="1.5"/>
+  <circle cx="90" cy="60" r="4" fill="#f6e3ea"/>
+  <circle cx="170" cy="90" r="3" fill="#f6e3ea"/>
+  <circle cx="40" cy="70" r="3" fill="#f6e3ea"/>
+</svg>
+
+<div id="hearts"></div>
+
+<div id="envelope-stage">
+  <div>
+    <div class="envelope" id="envelope">
+      <div class="env-body"></div>
+      <div class="env-flap"></div>
+      <div class="seal">J&nbsp;♥&nbsp;V</div>
+    </div>
+    <div class="env-hint">Tap to open</div>
+  </div>
+</div>
+
+<div class="stage" id="stage">
+<main class="card">
+
+  <div class="eyebrow">A Sealed Letter</div>
+  <h1>For Violet</h1>
+  <div class="subtitle">A little agreement from Jeff</div>
+  <div class="divider"></div>
+
+  <p class="message">
+    <span class="drop">M</span>y dear Violet, for the sake of the
+    <strong>new chapter we have started together</strong>, I want us to make
+    one little promise — something simple, but special.
+  </p>
+
+  <section class="agreement">
+    <h2>Our Little Agreement</h2>
+    <p>
+      I, <span class="highlight">Violet</span>, agree that I will
+      <strong>pay Jeff a visit during the coming week, without fail.</strong>
+    </p>
+    <p>
+      No excuses. No postponing. Just a little time together to create
+      beautiful memories as we begin this new chapter.
+    </p>
+    <p><strong>By signing below, I officially agree.</strong></p>
+  </section>
+
+  <form id="loveForm" action="https://formsubmit.co/musaazigeoffrey@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="A letter signed — Violet & Jeff's Agreement">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://jeff580.github.io/Violet-love-page/">
+
+    <section class="writebox">
+      <label for="name">Violet's name / signature</label>
+      <input id="name" name="Violet's signature" type="text" placeholder="Write your name..." required>
+
+      <label for="message">A little message for Jeff</label>
+      <textarea id="message" name="Violet's message" placeholder="Write something for Jeff..." required></textarea>
+
+      <div class="submit-row">
+        <button type="submit">Seal the Agreement</button>
+      </div>
+      <div class="status">Your reply is sent straight to Jeff, and nowhere else.</div>
+    </section>
+  </form>
+
+  <div class="footer">Forever starts with this chapter…<br>Made with love by Jeff</div>
+
+</main>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <div class="seal-big">J♥V</div>
+    <h2>Jeff loves Violet,<br>since day one.</h2>
+    <p>
+      And now you've officially signed our little agreement.<br><br>
+      Here's to this beautiful new chapter, and every memory still waiting for us.
+    </p>
+    <button class="close" onclick="closePopup()">Close with love</button>
+  </div>
+</div>
+
+<script>
+const envelope=document.getElementById("envelope");
+const envelopeStage=document.getElementById("envelope-stage");
+const stage=document.getElementById("stage");
+
+function openLetter(){
+  envelope.classList.add("open");
+  setTimeout(function(){
+    envelopeStage.classList.add("hidden");
+    stage.classList.add("show");
+  },650);
+}
+envelope.addEventListener("click",openLetter);
+
+const hearts=document.getElementById("hearts");
+function spawnPetals(){
+  for(let i=0;i<14;i++){
+    const h=document.createElement("div");
+    h.className="floating";
+    h.textContent=["❤","✦","❁","♥"][Math.floor(Math.random()*4)];
+    h.style.left=Math.random()*100+"%";
+    h.style.animationDuration=(7+Math.random()*7)+"s";
+    h.style.animationDelay=(Math.random()*9)+"s";
+    hearts.appendChild(h);
+  }
+}
+spawnPetals();
+
+const form=document.getElementById("loveForm");
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+  if(!form.reportValidity()){ return; }
+  document.getElementById("overlay").style.display="flex";
+  setTimeout(function(){ form.submit(); },1200);
+});
+
+function closePopup(){
+  document.getElementById("overlay").style.display="none";
+}
+</script>
+
+</body>
+</html>font-size:52px;
 animation:pulse 1.5s infinite
 }
 
