@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Violet ❤️ — Our New Chapter</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+ padding:20px;font-family:Georgia,"Times New Roman",serif;color:#54243a;
+ background:linear-gradient(135deg,#ffe1eb,#fff8fa,#f2e1ff);overflow:hidden
+}
+.card{
+ width:min(700px,100%);max-height:94vh;overflow:auto;background:rgba(255,255,255,.94);
+ border-radius:30px;padding:38px 28px;text-align:center;
+ box-shadow:0 20px 70px rgba(113,48,75,.22);border:1px solid #fff
+}
+.heart{font-size:52px;animation:pulse 1.5s infinite}
+@keyframes pulse{50%{transform:scale(1.13)}}
+h1{font-size:clamp(40px,9vw,62px);margin:8px 0;color:#813454}
+.subtitle{font-family:Arial,sans-serif;color:#a05a76;margin-bottom:25px}
+.message{font-size:19px;line-height:1.7;max-width:590px;margin:auto}
+.agreement{
+ margin:25px 0;padding:22px;background:#fff4f7;border:2px solid #edbfd0;border-radius:20px
+}
+.agreement h2{margin:0 0 12px;color:#8d3f5e}
+.agreement p{font-size:18px;line-height:1.6}
+.highlight{font-weight:bold;color:#8b3154}
+.writebox{text-align:left;margin-top:25px}
+label{display:block;font-family:Arial,sans-serif;font-weight:bold;color:#8d4963;margin-bottom:9px}
+textarea{
+ width:100%;min-height:125px;resize:vertical;border:2px solid #e7bfd0;border-radius:14px;
+ padding:14px;font:17px Georgia,serif;color:#54243a;outline:none;background:#fff
+}
+textarea:focus{border-color:#bd6688}
+button{
+ margin-top:15px;border:0;border-radius:28px;padding:14px 28px;background:#a9476c;color:#fff;
+ font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 7px 18px rgba(169,71,108,.25)
+}
+button:hover{transform:translateY(-2px)}
+.footer{margin-top:23px;color:#b46b86;font-size:14px}
+.floating{
+ position:fixed;bottom:-40px;font-size:22px;opacity:.65;animation:floatUp linear infinite;pointer-events:none
+}
+@keyframes floatUp{
+ 0%{transform:translateY(0) rotate(0deg);opacity:0}
+ 15%{opacity:.7}100%{transform:translateY(-115vh) rotate(360deg);opacity:0}
+}
+.overlay{
+ display:none;position:fixed;inset:0;background:rgba(69,25,45,.62);
+ align-items:center;justify-content:center;padding:22px;z-index:20
+}
+.popup{
+ width:min(540px,100%);background:#fff;border-radius:28px;padding:38px 25px;text-align:center;
+ box-shadow:0 25px 90px rgba(0,0,0,.3);animation:pop .45s ease
+}
+@keyframes pop{from{transform:scale(.65);opacity:0}to{transform:scale(1);opacity:1}}
+.popup .big{font-size:58px}
+.popup h2{font-size:clamp(30px,7vw,46px);color:#8b3154;margin:12px 0}
+.popup p{font-size:20px;line-height:1.6}
+.popup .close{background:#8b3154}
+.confetti{font-size:25px;letter-spacing:8px}
+</style>
+</head>
+<body>
+
+<div id="hearts"></div>
+
+<main class="card">
+  <div class="heart">❤️</div>
+  <h1>Violet</h1>
+  <div class="subtitle">A little agreement from Jeff</div>
+
+  <p class="message">
+    My dear Violet,<br><br>
+    For the sake of the <strong>new chapter we have started together</strong>,
+    I want us to make one little promise — something simple, but special.
+  </p>
+
+  <section class="agreement">
+    <h2>💌 Our Little Agreement</h2>
+    <p>
+      I, <span class="highlight">Violet</span>, agree that I will
+      <strong>pay Jeff a visit during the coming week, without fail.</strong>
+    </p>
+    <p>
+      No excuses. No postponing. Just a little time together to create
+      beautiful memories as we begin this new chapter. ❤️
+    </p>
+    <p><strong>By signing below, I officially agree. ✍️</strong></p>
+  </section>
+
+  <section class="writebox">
+    <label for="signature">Violet's signature or message for Jeff 💕</label>
+    <textarea id="signature" placeholder="Write your name, signature, or a little message for Jeff..."></textarea>
+    <div style="text-align:center">
+      <button onclick="acceptAgreement()">💖 I Agree</button>
+    </div>
+  </section>
+
+  <div class="footer">Forever starts with this chapter… ✨<br>Made with love by Jeff ❤️</div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <div class="confetti">💕 ✨ ❤️ ✨ 💕</div>
+    <div class="big">💖</div>
+    <h2>Jeff loves Violet<br>since day one.</h2>
+    <p>
+      And now you've officially signed our little agreement. 🥰<br>
+      Here's to this beautiful new chapter and all the memories waiting for us.
+    </p>
+    <div class="confetti">❤️ 💕 ✨ 💕 ❤️</div>
+    <button class="close" onclick="closePopup()">Close with love ❤️</button>
+  </div>
+</div>
+
+<script>
+const hearts=document.getElementById("hearts");
+for(let i=0;i<18;i++){
+ const h=document.createElement("div");
+ h.className="floating";
+ h.textContent=["❤️","💕","💗","✨"][Math.floor(Math.random()*4)];
+ h.style.left=Math.random()*100+"%";
+ h.style.animationDuration=(5+Math.random()*6)+"s";
+ h.style.animationDelay=(Math.random()*7)+"s";
+ hearts.appendChild(h);
+}
+function acceptAgreement(){
+ const text=document.getElementById("signature").value.trim();
+ if(!text){
+   alert("Violet ❤️ Please leave your signature or a little message for Jeff first.");
+   return;
+ }
+ document.getElementById("overlay").style.display="flex";
+}
+function closePopup(){
+ document.getElementById("overlay").style.display="none";
+}
+</script>
+</body>
+</html>
