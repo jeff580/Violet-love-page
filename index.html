@@ -321,11 +321,43 @@ function spawnPetals(){
 spawnPetals();
 
 const form=document.getElementById("loveForm");
+const submitBtn=form.querySelector("button[type=submit]");
+const statusEl=document.querySelector(".status");
+
 form.addEventListener("submit",function(e){
   e.preventDefault();
   if(!form.reportValidity()){ return; }
-  document.getElementById("overlay").style.display="flex";
-  setTimeout(function(){ form.submit(); },1200);
+
+  submitBtn.disabled=true;
+  submitBtn.textContent="Sending…";
+  statusEl.textContent="Sending your reply to Jeff…";
+
+  fetch("https://formsubmit.co/ajax/musaazigeoffrey@gmail.com",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "Accept":"application/json" },
+    body:JSON.stringify({
+      "Violet's signature": document.getElementById("name").value,
+      "Violet's message": document.getElementById("message").value,
+      "_subject":"A letter signed — Violet & Jeff's Agreement"
+    })
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){
+    submitBtn.disabled=false;
+    submitBtn.textContent="Seal the Agreement";
+    if(data && (data.success==="true" || data.success===true)){
+      statusEl.textContent="Delivered to Jeff's inbox.";
+      document.getElementById("overlay").style.display="flex";
+      form.reset();
+    } else {
+      statusEl.textContent="Something went wrong sending this — please try again in a moment.";
+    }
+  })
+  .catch(function(){
+    submitBtn.disabled=false;
+    submitBtn.textContent="Seal the Agreement";
+    statusEl.textContent="Couldn't send — check your connection and try again.";
+  });
 });
 
 function closePopup(){
